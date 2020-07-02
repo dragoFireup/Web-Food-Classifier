@@ -4,6 +4,7 @@
 	<title>Food Classifier</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </head>
 <body>
@@ -19,36 +20,18 @@
 
 	This is a food classifier
 
-	<form action="http://localhost/" method="POST" enctype = "multipart/form-data">
+	<form method="post" id="form" enctype="multipart/form-data">
 		<input type="file" name="file" id="file">
 		<br>
-
-		<img src="" style="display: none" id="img" width="300" height="400" />
-
-		<input type="submit" value="Predict">
 	</form>
+	
+	<img src="" style="display: none" id="img" width="300" height="400" />
 
-	<script>
-		
-		function showImage(fileInput) {
-			
-			if(fileInput.files && fileInput.files[0]) {
+	<input type="button" value="Predict" id="predict">
 
-				$("#img").css('display', 'block');
-				var reader = new FileReader();
+	<div id="result">
 
-				reader.onload = (e) => $("#img").attr("src", e.target.result);
-
-				reader.readAsDataURL(fileInput.files[0]);
-			}
-
-		}
-
-		$("#file").change(function() {
-			showImage(this);
-		});
-
-	</script>
+	</div>
 
 </body>
 </html>
