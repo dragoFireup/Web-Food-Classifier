@@ -6,12 +6,11 @@ from flask import Flask, render_template, request, flash, redirect
 from werkzeug.utils import secure_filename
 import os
 
+from io import BytesIO
 
-UPLOAD_FOLDER = os.getcwd()+"\\static"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["SECRET_KEY"] = "some_key"
 
 def allowed_file(filename):
@@ -39,11 +38,18 @@ def home():
 			return redirect(request.url)
 
 		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+			image_bytes = file.read()
+			image = open_image(BytesIO(image_bytes))
+
+			x = model.predict(image)
+			
+
 			return redirect(request.url)
 
 
+pathToModel = os.getcwd() + "\\weights"
+
+model = load_learner(Path(pathToModel), 'model-unfreeze.pkl')
 
 if __name__ == "__main__":
 	app.run("localhost", port=80, debug=True)
