@@ -1,3 +1,5 @@
+// Script File
+
 function showImage(fileInput) {
 	if(fileInput.files && fileInput.files[0]) {
 
