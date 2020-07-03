@@ -37,7 +37,7 @@ To run the flask application
 
 `flask run`
 
-This runs your flask application on [127.0.0.1:5000](https:\\127.0.0.1:5000/)
+This runs your flask application on [htpp://127.0.0.1:5000](http://127.0.0.1:5000/)
 
 To run the application on port 80
 
