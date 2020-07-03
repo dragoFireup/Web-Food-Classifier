@@ -2,35 +2,74 @@
 <html>
 <head>
 	<title>Food Classifier</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="{{ url_for('static', filename='script.js') }}"></script>
 
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
-	{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 
-	This is a food classifier
+	<div class="box has-text-centered">
+		<p class="title is-1 title-space">This is a food classifier</p>
+	</div>
 
-	<form method="post" id="form" enctype="multipart/form-data">
-		<input type="file" name="file" id="file">
-		<br>
-	</form>
-	
-	<img src="" style="display: none" id="img" width="300" height="400" />
+	<div class="columns">
+			<div class="column is-4">
+			<form method="post" id="form" enctype="multipart/form-data">
+			
+				<div class="field">
+					<label class="label">Photo of the food here</label>
+					<div class="control">
+						<div class="file has-name">
+							<label class="file-label">
+								<input class="file-input" type="file" name="file" id="file">
+								<span class="file-cta">
+									<span class="file-icon">
+										<i class="fa fa-upload"></i>
+									</span>
+									<span class="file-label">
+										Choose a file…
+									</span>
+								</span>
+								<span class="file-name">
+									
+								</span>
+							</label>
+						</div>
+					</div>
+				</div>
 
-	<input type="button" value="Predict" id="predict">
+			</form>
+		
+			<img src="" class="img-style" id="img" width="200" height="300" />	
+		
+			<div class="container">
+				<input class="button is-success" type="button" value="Predict" id="predict">
+			</div>
+		</div>
 
-	<div id="result">
+		<div class="column is-4">
+			<div class="content">
+				<ul id="result">
+				</ul>
+			</div>
+		</div>
 
+
+		<div class="column is-4">
+			<label class="label">List of Food Categories</label>
+			<div class="content list">
+				<ol id="food_list" type="1">
+
+				</ul>
+			</div>
+		</div>
 	</div>
 
 </body>

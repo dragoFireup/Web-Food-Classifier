@@ -1,6 +1,8 @@
 from fastai import *
 from fastai.vision import *
 
+from typing import Bytes
+
 from flask import Flask, render_template, request, flash, redirect, jsonify
 
 from werkzeug.utils import secure_filename
@@ -13,7 +15,7 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "some_key"
 
-def allowed_file(filename):
+def allowed_file(filename: Bytes) -> bool:
 	return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/", methods = ["GET"])
@@ -52,14 +54,21 @@ def classify():
 			val = sorted(val, reverse=True, key=lambda x: x[1])
 			result = []
 			for i in range(3):
-				result.append({'name': val[i][0].replace('_', ' ').title(), 'prob': round(val[i][1], 4)*100})
+				result.append({'name': val[i][0].replace('_', ' ').title(), 'prob': round(val[i][1]*100, 2)})
 
 			return jsonify(result)
+
+@app.route('/food_classes', methods=['GET'])
+def food_list():
+	if request.method == 'GET':
+		return jsonify([i.replace('_', ' ').title() for i in model.data.classes])
 
 
 pathToModel = os.getcwd() + "\\weights"
 
 model = load_learner(Path(pathToModel), 'model-unfreeze.pkl')
+
+print(model.data.classes)
 
 if __name__ == "__main__":
 	app.run("localhost", port=80, debug=True)

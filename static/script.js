@@ -1,9 +1,13 @@
 function showImage(fileInput) {
 	if(fileInput.files && fileInput.files[0]) {
+
 		$("#img").css('display', 'block');
 		var reader = new FileReader();
 
-		reader.onload = (e) => $("#img").attr("src", e.target.result);
+		reader.onload = (e) => {
+			$("#img").attr("src", e.target.result)
+			$("span.file-name")[0].innerHTML = fileInput.files[0].name
+		};
 
 		reader.readAsDataURL(fileInput.files[0]);
 	}
@@ -23,7 +27,7 @@ function sendFormData() {
 		success: function(data) {
 			$("#result").empty();
 			for(var i=0; i<data.length; i++) {
-				$("#result").append("<p>" + data[i]["name"] + " : " + data[i]["prob"] + "%")
+				$("#result").append("<li class='subtitle is-4'>" + data[i]["name"] + " : " + data[i]["prob"] + "% </li>")
 			}
 			console.log('Success!');
 		}
@@ -32,6 +36,17 @@ function sendFormData() {
 }
 
 $(document).ready(function() {
+
+	$.ajax({
+		type: 'GET',
+		url: '/food_classes',
+		success: function(data) {
+			$("#food_list").empty();
+			for(var i=0; i<data.length; i++)
+				$("#food_list").append("<li>"+data[i]+"</li>")
+		}
+	});
+	
 	$("#file").change(function() {
 		showImage(this);
 	});
