@@ -1,9 +1,7 @@
 # Pycache files
 __pycache__/
-weights/
 
 # Image extenstions
 *.jpg
 *.jpeg
 *.png
-*.pkl
