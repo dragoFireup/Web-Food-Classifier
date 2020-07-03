@@ -51,6 +51,11 @@ def get_classnames() -> List:
     return class_names
 
 
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+
 @app.route("/", methods=["GET"])
 def home():
     if request.method == "GET":

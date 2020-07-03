@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Error{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+	<div class="container error-box">
+		<p class="title error">
+			404
+		</p>
+		<p class="subtitle">
+			We couldn't find the page you were looking for!!!
+		</p>
+		<p class="subtitle">
+			<a href="https://webfoodclassifier.herokuapp.com/">
+				Link to the Food Classifier
+			</a>
+		</p>
+	</div>
+{% endblock %}

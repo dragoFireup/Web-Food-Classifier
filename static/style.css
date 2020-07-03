@@ -49,3 +49,15 @@ form {
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+
+.error-box {
+	height: 65vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.error {
+	color: hsl(171, 100%, 41%);
+	font-size: 8em;
+}
