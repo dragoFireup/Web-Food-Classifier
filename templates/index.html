@@ -1,39 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
 
-	<title>Food Classifier | R Vrishab Jain</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="This is a food classifier which uses an API to send the image, the API responds with the predictions of the the food classifier">
+{% block title %}Food Classifier{% endblock %}
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="/static/script.js" type="application/javascript"></script>
+{% block script %}
+<script src="{{ url_for('static', filename='script.js') }}" type="application/javascript"></script>
+{% endblock %}
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
 
-</head>
-<body>
-
-	<nav class="navbar box" role="navigation" aria-label="main navigation">
-		<div class="navbar-brand">
-			<p class="title is-4 title-space navbar-item">
-				Food Classifier
-			</p>
-		</div>
-
-		<div class="navbar-end">
-			<a class="navbar-item" href="https://vrishabjain.fail" target="_blank">
-				About the Developer
-			</a>
-
-			<a class="navbar-item" href="https://github.com/dragoFireup" target="_blank">
-				GitHub
-			</a>
-		</div>
-	</nav>
-
+{% block content %}
 	<div class="columns">
 			<div class="column is-4">
 			<form method="post" id="form" enctype="multipart/form-data">
@@ -86,6 +63,4 @@
 			</div>
 		</div>
 	</div>
-
-</body>
-</html>
+{% endblock %}
