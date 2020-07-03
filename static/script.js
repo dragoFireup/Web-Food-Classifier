@@ -1,6 +1,7 @@
 function showImage(fileInput) {
 	if(fileInput.files && fileInput.files[0]) {
 
+		$("#result").empty();
 		$("#img").css('display', 'block');
 		var reader = new FileReader();
 
@@ -30,6 +31,9 @@ function sendFormData() {
 				$("#result").append("<li class='subtitle is-4'>" + data[i]["name"] + " : " + data[i]["prob"] + "% </li>")
 			}
 			console.log('Success!');
+		},
+		error: function(data) {
+			alert(data.responseText);
 		}
 	})
 

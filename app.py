@@ -1,12 +1,13 @@
 from fastai import *
 from fastai.vision import *
 
-from typing import Bytes
+from typing import List
 
 from flask import Flask, render_template, request, flash, redirect, jsonify
 
 from werkzeug.utils import secure_filename
 import os
+from werkzeug.datastructures import FileStorage
 
 from io import BytesIO
 
@@ -15,8 +16,44 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "some_key"
 
-def allowed_file(filename: Bytes) -> bool:
+def allowed_file(filename: str) -> bool:
 	return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def predict(img: bytes) -> List:
+	
+	pred_class, pred_idx, pred_probs = model.predict(img)
+
+	pred_probs = pred_probs / sum(pred_probs)
+
+	pred_probs = pred_probs.tolist()
+
+	return [pred_class, pred_idx, pred_probs]
+
+def get_topkaccuracy(pred_probs: List, n: int = 3) -> List[dict]:
+
+	class_probs = []
+	class_names = get_classnames()
+
+	for i in range(len(pred_probs)):
+		class_probs.append((class_names[i], pred_probs[i]))
+
+	class_probs = sorted(class_probs, reverse=True, key=lambda x: x[1])
+
+	top_k = []
+	for class_prob in class_probs[:n]:
+		top_k.append({'name': class_prob[0], 'prob': round(class_prob[1]*100, 2)})
+
+	return top_k
+
+def get_classnames() -> List:
+	
+	class_names = model.data.classes
+	for i in range(len(class_names)):
+		class_names[i] = class_names[i].replace('_', ' ')
+		class_names[i] = class_names[i].title()
+
+	return class_names
+
 
 @app.route("/", methods = ["GET"])
 def home():
@@ -30,45 +67,35 @@ def classify():
 		print(request.files)
 
 		if "file" not in request.files:
-			return jsonify('No File Part')
+			return "No file selected", 404
 
 		file = request.files["file"]
-		print(file)
 
 		if file.filename == "":
-			return jsonify('No Selected file')
+			return 'No File Selected', 404
+
+		if not allowed_file(file.filename):
+			return 'Please upload an image of type jpg/jpeg/png', 404
 
 		if file and allowed_file(file.filename):
-			image_bytes = file.read()
-			image = open_image(BytesIO(image_bytes))
+			image = file.read()
+			image_bytes = open_image(BytesIO(image))
 
-			clas, idx, prob = model.predict(image)
+			pred_class, pred_idx, pred_probs = predict(image_bytes)
 
-			prob = prob.tolist()
+			top_k = get_topkaccuracy(pred_probs)
 
-			val = []
-
-			for i in range(len(prob)):
-				val.append([model.data.classes[i], prob[i]])
-
-			val = sorted(val, reverse=True, key=lambda x: x[1])
-			result = []
-			for i in range(3):
-				result.append({'name': val[i][0].replace('_', ' ').title(), 'prob': round(val[i][1]*100, 2)})
-
-			return jsonify(result)
+			return jsonify(top_k)
 
 @app.route('/food_classes', methods=['GET'])
 def food_list():
 	if request.method == 'GET':
-		return jsonify([i.replace('_', ' ').title() for i in model.data.classes])
+		return jsonify(get_classnames())
 
 
 pathToModel = os.getcwd() + "\\weights"
 
 model = load_learner(Path(pathToModel), 'model-unfreeze.pkl')
-
-print(model.data.classes)
 
 if __name__ == "__main__":
 	app.run("localhost", port=80, debug=True)
