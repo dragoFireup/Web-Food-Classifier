@@ -1,7 +1,2 @@
 # Pycache files
 __pycache__/
-
-# Image extenstions
-*.jpg
-*.jpeg
-*.png
