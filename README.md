@@ -2,6 +2,8 @@
 
 This is a web application which allows a user to upload an image and the get the probabilities for top 3 classes from the neural network.
 
+![A look of the website](https://https://github.com/dragoFireup/Web-Food-Classifier/sample.png)
+
 ### Details about the Neural Network
 
 #### Dataset
@@ -37,7 +39,7 @@ To run the flask application
 
 `flask run`
 
-This runs your flask application on [htpp://127.0.0.1:5000](http://127.0.0.1:5000/)
+This runs your flask application on [http://127.0.0.1:5000](http://127.0.0.1:5000/)
 
 To run the application on port 80
 
@@ -53,4 +55,4 @@ To run the application on your network IP address
 
 This command will run the application on your network IP address on port 80.
 
-**You can access the site using _127.0.0.1_ when running on network IP too**
+**You can access the site using _127.0.0.1_ too even when running on network IP**
