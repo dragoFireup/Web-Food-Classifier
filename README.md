@@ -2,7 +2,7 @@
 
 This is a web application which allows a user to upload an image and the get the probabilities for top 3 classes from the neural network.
 
-![A look of the website](https://https://github.com/dragoFireup/Web-Food-Classifier/sample.png)
+![A look of the website](https://github.com/dragoFireup/Web-Food-Classifier/blob/master/sample.png)
 
 ### Details about the Neural Network
 
