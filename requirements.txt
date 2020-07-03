@@ -1,3 +1,4 @@
-http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
-Flask==1.1.2
-fastai==1.0.61
+torch==1.0.0
+torchvision==0.2.1
+Flask==1.0.2
+fastai==1.0.42
