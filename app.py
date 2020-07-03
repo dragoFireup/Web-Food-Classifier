@@ -1,4 +1,3 @@
-import os
 from io import BytesIO
 from typing import List
 
@@ -91,7 +90,7 @@ def food_list():
         return jsonify(get_classnames())
 
 
-pathToModel = os.getcwd() + "\\weights"
+pathToModel = "./weights"
 
 model = load_learner(Path(pathToModel), "model-unfreeze.pkl")
 
