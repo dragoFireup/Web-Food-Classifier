@@ -28,24 +28,29 @@ This is a web application which allows a user to upload an image and the get the
 Make sure you have either the [training](#training-environment) or [deployment](#deployment-environment) environment set up.
 
 To setup the deployment environment
+
 `pip install -r requirements.txt`
 
 #### Run using flask commands
 
 To run the flask application
+
 `flask run`
 
-This runs your flask application on [http:\\127.0.0.1:5000](http:\\127.0.0.1:5000\)
+This runs your flask application on [http:\\127.0.0.1:5000](https:\\127.0.0.1:5000/)
 
 To run the application on port 80
+
 `flask run -p 80`
 
 To run the application on your network IP address
+
 `flask run -h 0.0.0.0`
 
 #### Run using python
 
 `python app.py`
+
 This command will run the application on your network IP address on port 80.
 
 **You can access the site using _127.0.0.1_ when running on network IP too**
